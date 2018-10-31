@@ -42,3 +42,26 @@ catkin_ws/
 ---etc...
 ```
 >Note: "-" indicates levels
+
+## Standard install via command-line
+
+```
+$ mkdir -p ~/catkin_ws/src
+$ cd ~/catkin_ws/src
+$ git clone --recursive https://github.com/Learner1729/beginner_tutorials.git
+$ cd ~/catkin_ws
+$ catkin_make
+$ source devel/setup.bash
+$ echo $ROS_PACKAGE_PATH  -> Checks whether the environment variable includes the directory you are in.
+```
+## Step to run nodes
+
+**1.** Start ROS core $ roscore <br/>
+**2.** Steps to run talker, open a new shell without closing the previous shell. <br/>
+   Run below commands
+   ```
+   $ source devel/setup.bash
+   $ echo $ROS_PACKAGE_PATH
+   $ rosrun beginner_tutorials talker
+   ```
+**3.** Follow the same steps for running listener node.
