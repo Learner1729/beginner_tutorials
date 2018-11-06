@@ -54,7 +54,7 @@ $ catkin_make
 $ source devel/setup.bash
 $ echo $ROS_PACKAGE_PATH  -> Checks whether the environment variable includes the directory you are in.
 ```
-## Step to run nodes
+## Running the nodes using *rosrun*
 
 **1.** Start ROS core $ roscore <br/>
 **2.** Steps to run talker, open a new shell without closing the previous shell. <br/>
@@ -65,3 +65,10 @@ $ echo $ROS_PACKAGE_PATH  -> Checks whether the environment variable includes th
    $ rosrun beginner_tutorials talker
    ```
 **3.** Follow the same steps for running listener node.
+
+## Running the nodes using *roslaunch*
+
+This week's tutorials deal with ROS *services*, *logging* and *launch* files. Launch files are used when multiple nodes are needed to be started from within the package. 
+```
+$ roslaunch beginner_tutorials SubPub.launch
+```

@@ -1,0 +1,19 @@
+<launch>  
+  
+  <node
+   name="talker"
+   pkg="beginner_tutorials"
+   type="talker"
+   required="true"
+   output="screen"
+  />
+  
+  <node 
+   name="listener"
+   pkg="beginner_tutorials" 
+   type="listener"
+   launch-prefix="xterm -e" 
+   output="screen"
+  />
+
+</launch>
