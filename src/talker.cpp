@@ -95,21 +95,20 @@ int main(int argc, char **argv) {
 
   // initialize parameter variable
   auto frequency = 0;
-  
+
   /** 
    * Accessing the value of the private parameter
    * The get function returns true if the value was read successfully and false
    * if there was a problem. Thus, if it returns false I am assigning a default
    * value to our parameter and display's a logging message.
    */
-  bool ok = ros::param::get("~freq",frequency);
-  if(!ok){
+  bool ok = ros::param::get("~freq", frequency);
+  if (!ok) {
     ROS_ERROR_STREAM("Using the default frequency := 10");
     frequency = 10;
-  }
-  else {
+  } else {
     ROS_DEBUG_STREAM("Using frequency := " << frequency);
-    if(frequency==0) {
+    if (frequency == 0) {
       ROS_FATAL_STREAM("Frequency can't be zero");
       ros::shutdown();
     }
