@@ -39,6 +39,7 @@ catkin_ws/
 ---CMakeLists.txt
 ---include/
 ---src/
+---srv/
 ---etc...
 ```
 >Note: "-" indicates levels
@@ -49,32 +50,63 @@ catkin_ws/
 $ mkdir -p ~/catkin_ws/src
 $ cd ~/catkin_ws/src
 $ git clone --recursive https://github.com/Learner1729/beginner_tutorials.git
+$ git branch -a
+$ git checkout Week10_HW
 $ cd ~/catkin_ws
 $ catkin_make
 $ source devel/setup.bash
 $ echo $ROS_PACKAGE_PATH  -> Checks whether the environment variable includes the directory you are in.
 ```
-## Running the nodes using *rosrun*
+## Running the nodes using rosrun
 
 **1.** Start ROS core $ roscore <br/>
 **2.** Steps to run talker, open a new shell without closing the previous shell. <br/>
    Run below commands
    ```
+   $ cd ~/catkin_ws
    $ source devel/setup.bash
    $ echo $ROS_PACKAGE_PATH
-   $ rosrun beginner_tutorials talker
+   $ rosrun beginner_tutorials talker -> Uses default frequency = 10 Hz
+   $ rosrun beginner_tutorials _freq:=<user-defined-frequency> -> Defines frequency using private freq parameter
    ```
-**3.** Follow the same steps for running listener node.
+**3.** Steps to run listener node.
+   Open a new shell and run below commands
+   ```
+   $ cd ~/catkin_ws
+   $ source devel/setup.bash
+   $ echo $ROS_PACKAGE_PATH
+   $ rosrun beginner_tutorials listener
+   ```
 
-## Running the nodes using *roslaunch*
+## Running the nodes using roslaunch
 
 Launch files are used when multiple nodes are needed to be started within the package. To *launch* multiple nodes execute following command:
 ```
+$ cd ~/catkin_ws
 $ roslaunch beginner_tutorials SubPub.launch
 ```
 > Note: No need to start *rosmaster* node while using *launch* file. It starts when the file is launched if it is not running.
 
-The command above will launch the nodes with default values. To pass the custom frequency value to launch file use the following command:
+The command above will launch the nodes with default values. To pass the custom frequency value use the following command:
 ```
+$ cd ~/catkin_ws
 $ roslaunch beginner_tutorials SubPub.launch freq:=1
 ```
+## Running ROS Services
+Create a ros service named *changeBaseString*. This service is used to modify the talker's default message. 
+To run this service open a new shell and type:
+```
+$ cd ~/catkin_ws
+$ source devel/setup.bash
+$ rosservice call /changeBaseString "Hi......"
+```
+You can also refer to the image file given in the *results* directory.
+
+## Log messages
+
+The human-readable string messages can be viewed in real-time through the rqt_console GUI application.
+To run rqt_console, open new shell and type:
+```
+$ rosrun rqt_console rqt_console
+```
+You can also refer to the image file given in the *results* directory.
