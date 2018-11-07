@@ -31,7 +31,6 @@
  * @brief      ROS talker node
  *
  */
-
 #include <sstream>
 
 /**
@@ -46,6 +45,29 @@
  * package.
  */
 #include "std_msgs/String.h"
+
+/**
+ * Including C++ header file associated with the service which defines datatype
+ * of request and response
+ */
+#include "beginner_tutorials/changeBaseString.h"
+
+// Initializing the base string
+std::string message = "Hello World!!";
+
+/**
+ * @brief changeBaseString
+ * @param request: The request
+ * @param response: The response
+ * @return true, if everthings works properly
+ */
+bool changeBaseString(beginner_tutorials::changeBaseString::Request& request,
+                    beginner_tutorials::changeBaseString::Response& response) {
+  response.outputData = request.inputData;
+  message = response.outputData;
+  ROS_WARN_STREAM("Changed the Base string to: " << message);
+  return true;
+}
 
 /**
  * This tutorial demonstrates simple sending of messages over the ROS system.
@@ -82,8 +104,15 @@ int main(int argc, char **argv) {
    */
   bool ok = ros::param::get("~freq",frequency);
   if(!ok){
-    ROS_INFO_STREAM("Using the default parameter value");
+    ROS_ERROR_STREAM("Using the default frequency := 10");
     frequency = 10;
+  }
+  else {
+    ROS_DEBUG_STREAM("Using frequency := " << frequency);
+    if(frequency==0) {
+      ROS_FATAL_STREAM("Frequency can't be zero");
+      ros::shutdown();
+    }
   }
 
   /**
@@ -104,6 +133,13 @@ int main(int argc, char **argv) {
    */
   auto chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
 
+  /** 
+   * Creating a server object. It takes two types of parameters, first is 
+   * service_name it is a string name of the service that I have created and
+   * second is the callback function
+   */
+  auto server = n.advertiseService("changeBaseString", changeBaseString);
+
   /**
    * A ros::Rate object allows us to specify a frequency that we would like to
    * loop at.
@@ -122,7 +158,7 @@ int main(int argc, char **argv) {
     std_msgs::String msg;
 
     std::stringstream ss;
-    ss << "Hello Ashish!! " << count;
+    ss << message << count;
     msg.data = ss.str();
 
     ROS_INFO("%s", msg.data.c_str());
@@ -147,6 +183,5 @@ int main(int argc, char **argv) {
 
     ++count;
   }
-
   return 0;
 }

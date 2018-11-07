@@ -10,6 +10,8 @@ add_compile_options(-std=c++11)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
+  genmsg
+  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -53,11 +55,10 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
+add_service_files(
+  DIRECTORY srv
+  FILES changeBaseString.srv
+)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -67,10 +68,10 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs
-# )
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -115,8 +116,7 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-  include
-  ${catkin_INCLUDE_DIRS}
+  include ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -199,6 +199,8 @@ include_directories(
 
 add_executable(talker src/talker.cpp)
 target_link_libraries(talker ${catkin_LIBRARIES})
+add_dependencies(talker ${${PROJECT_NAME}_EXPORTED_TARGETS})
 
 add_executable(listener src/listener.cpp)
 target_link_libraries(listener ${catkin_LIBRARIES})
+add_dependencies(listener ${${PROJECT_NAME}_EXPORTED_TARGETS})
