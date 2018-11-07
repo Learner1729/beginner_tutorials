@@ -1,6 +1,6 @@
-# Week_8 ROS begineer tutorials
+# Week_10 ROS begineer tutorials
 
-This repository is created in order to complete week 8 ROS begineer tutorials for ENPM808X: Software Development of Robotics ME Coursework.
+*This week's tutorials deal with ROS services, logging and launch files.*
 
 ## Licence
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
@@ -68,7 +68,13 @@ $ echo $ROS_PACKAGE_PATH  -> Checks whether the environment variable includes th
 
 ## Running the nodes using *roslaunch*
 
-This week's tutorials deal with ROS *services*, *logging* and *launch* files. Launch files are used when multiple nodes are needed to be started from within the package. 
+Launch files are used when multiple nodes are needed to be started within the package. To *launch* multiple nodes execute following command:
 ```
 $ roslaunch beginner_tutorials SubPub.launch
+```
+> Note: No need to start *rosmaster* node while using *launch* file. It starts when the file is launched if it is not running.
+
+The command above will launch the nodes with default values. To pass the custom frequency value to launch file use the following command:
+```
+$ roslaunch beginner_tutorials SubPub.launch freq:=1
 ```

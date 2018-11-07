@@ -1,13 +1,17 @@
 <launch>  
   
+  <arg name="freq" default="10"/> 
+  
   <node
    name="talker"
    pkg="beginner_tutorials"
    type="talker"
    required="true"
    output="screen"
-  />
-  
+  >
+  <param name="freq" value="$(arg freq)"/>
+  </node>
+
   <node 
    name="listener"
    pkg="beginner_tutorials" 
