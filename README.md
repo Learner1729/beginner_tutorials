@@ -50,6 +50,7 @@ catkin_ws/
 $ mkdir -p ~/catkin_ws/src
 $ cd ~/catkin_ws/src
 $ git clone --recursive https://github.com/Learner1729/beginner_tutorials.git
+$ cd beginner_tutorials
 $ git branch -a
 $ git checkout Week10_HW
 $ cd ~/catkin_ws
@@ -67,7 +68,7 @@ $ echo $ROS_PACKAGE_PATH  -> Checks whether the environment variable includes th
    $ source devel/setup.bash
    $ echo $ROS_PACKAGE_PATH
    $ rosrun beginner_tutorials talker -> Uses default frequency = 10 Hz
-   $ rosrun beginner_tutorials _freq:=<user-defined-frequency> -> Defines frequency using private freq parameter
+   $ rosrun beginner_tutorials talker _freq:=<user-defined-frequency> -> Defines frequency using private freq parameter
    ```
 **3.** Steps to run listener node.
    Open a new shell and run below commands

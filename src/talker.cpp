@@ -31,6 +31,8 @@
  * @brief      ROS talker node
  *
  */
+
+// Including string stream C++ header file
 #include <sstream>
 
 /**
@@ -52,22 +54,8 @@
  */
 #include "beginner_tutorials/changeBaseString.h"
 
-// Initializing the base string
-std::string message = "Hello World!!";
-
-/**
- * @brief changeBaseString
- * @param request: The request
- * @param response: The response
- * @return true, if everthings works properly
- */
-bool changeBaseString(beginner_tutorials::changeBaseString::Request& request,
-                    beginner_tutorials::changeBaseString::Response& response) {
-  response.outputData = request.inputData;
-  message = response.outputData;
-  ROS_WARN_STREAM("Changed the Base string to: " << message);
-  return true;
-}
+// Including user-defined header file
+#include "message.hpp"
 
 /**
  * This tutorial demonstrates simple sending of messages over the ROS system.
@@ -79,7 +67,7 @@ int main(int argc, char **argv) {
    * line. For programmatic remappings you can use a different version of 
    * init() which takes remappings directly, but for most command-line programs
    * passing argc and argv is the easiest way to do it.  The third argument to
-   * init() is the name of the node.
+   * init() is the name of the node. Node names must be unique.
    *
    * You must call one of the versions of ros::init() before using any other
    * part of the ROS system.
@@ -92,6 +80,8 @@ int main(int argc, char **argv) {
    * last NodeHandle destructed will close down the node.
    */
   ros::NodeHandle n;
+
+  Message m;
 
   // initialize parameter variable
   auto frequency = 0;
@@ -125,19 +115,22 @@ int main(int argc, char **argv) {
    * to publish().  Once all copies of the returned Publisher object are 
    * destroyed, the topic will be automatically unadvertised.
    *
-   * The second parameter to advertise() is the size of the message queue used
-   * for publishing messages.  If messages are published more quickly than we 
-   * can send them, the number here specifies how many messages to buffer up
-   * before throwing some away.
+   * - The first parameter to advertise() function is the topic name.
+   * - The second parameter to advertise() is the size of the message queue 
+   *   used for publishing messages. If messages are published more quickly
+   *   than we can send them, the number here specifies how many messages to
+   *   buffer up before throwing some away.
    */
   auto chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
 
   /** 
-   * Creating a server object. It takes two types of parameters, first is 
-   * service_name it is a string name of the service that I have created and
-   * second is the callback function
+   * Creating a server object. It takes three types of parameters, 
+   * - first is service_name it is a string name of the service that we have
+   *   created
+   * - second is the callback function
    */
-  auto server = n.advertiseService("changeBaseString", changeBaseString);
+  auto server = n.advertiseService("changeBaseString",
+    &Message::changeBaseString, &m);
 
   /**
    * A ros::Rate object allows us to specify a frequency that we would like to
@@ -150,6 +143,15 @@ int main(int argc, char **argv) {
    * string for each message.
    */
   auto count = 0;
+
+  /**
+   * ros::ok(), it is used to check if the node should continue running or not
+   * ros::ok(), will return false if 
+   *  - a SIGINT is received (Ctrl + C)
+   *  - if ros::shutdown() has been called by another part of the code
+   *  - if all ros::NodeHandles have been destroyed
+   * Thus, it will keep spinning until above events occurs
+   */
   while (ros::ok()) {
     /**
      * This is a message object. You stuff it with data, and then publish it.
@@ -157,7 +159,7 @@ int main(int argc, char **argv) {
     std_msgs::String msg;
 
     std::stringstream ss;
-    ss << message << count;
+    ss << m.getMessage() << count;
     msg.data = ss.str();
 
     ROS_INFO("%s", msg.data.c_str());
@@ -178,8 +180,13 @@ int main(int argc, char **argv) {
      */
     ros::spinOnce();
 
+    /**
+     * Needs to call sleep() function over here, so that it makes the system
+     * sleep for the remaining duration, to enforce the loop rate.
+     */
     loop_rate.sleep();
 
+    // incrementing the message count
     ++count;
   }
   return 0;

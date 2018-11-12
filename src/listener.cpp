@@ -38,7 +38,7 @@
  * @brief This function genrates the rosinfo when a new message arrives on the
  *        chatter topic
  * @param Pointer to the msg
- * @returns return null
+ * @return none
  */
 void chatterCallback(const std_msgs::String::ConstPtr& msg) {
   ROS_INFO("I heard: [%s]", msg->data.c_str());
@@ -57,7 +57,7 @@ int main(int argc, char **argv) {
    * line. For programmatic remappings you can use a different version of 
    * init() which takes remappings directly, but for most command-line programs
    * passing argc and argv is the easiest way to do it. The third argument to 
-   * init() is the name of the node.
+   * init() is the name of the node. Node names must be unique.
    *
    * You must call one of the versions of ros::init() before using any other
    * part of the ROS system.
@@ -80,10 +80,13 @@ int main(int argc, char **argv) {
    * unsubscribe.  When all copies of the Subscriber object go out of scope,
    * this callback will automatically be unsubscribed from this topic.
    *
-   * The second parameter to the subscribe() function is the size of the 
-   * message queue.  If messages are arriving faster than they are being
-   * processed, this is the number of messages that will be buffered up before
-   * beginning to throw away the oldest ones.
+   * - The first parameter to the subscribe() function is the topic name.
+   * - The second parameter to the subscribe() function is the size of the 
+   *   message queue.  If messages are arriving faster than they are being
+   *   processed, this is the number of messages that will be buffered up 
+   *   before beginning to throw away the oldest ones.
+   * - The third parameter to the subscribe() function is the function which
+   *   is used handle the message.
    */
   auto sub = n.subscribe("chatter", 1000, chatterCallback);
 
