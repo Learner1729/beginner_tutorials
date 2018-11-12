@@ -1,6 +1,6 @@
-# Week_10 ROS begineer tutorials
+# ROS begineer tutorials
 
-*This week's tutorials deal with ROS services, logging and launch files.*
+*This repository is created in order to complete ROS begineer tutorials for ENPM808X: Software Development of Robotics ME Coursework.*
 
 ## Licence
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
@@ -50,9 +50,6 @@ catkin_ws/
 $ mkdir -p ~/catkin_ws/src
 $ cd ~/catkin_ws/src
 $ git clone --recursive https://github.com/Learner1729/beginner_tutorials.git
-$ cd beginner_tutorials
-$ git branch -a
-$ git checkout Week10_HW
 $ cd ~/catkin_ws
 $ catkin_make
 $ source devel/setup.bash
