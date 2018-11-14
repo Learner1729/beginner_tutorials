@@ -20,4 +20,12 @@
    output="screen"
   />
 
+  <node 
+   name="record"
+   pkg="rosbag"
+   type="record"
+   args="--duration=15.0 -a -O $(find beginner_tutorials)/results/record.bag"
+   if="$(arg Record)" 
+  />
+
 </launch>

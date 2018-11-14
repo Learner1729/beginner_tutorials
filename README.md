@@ -162,3 +162,35 @@ Moreover, tests can also be launched using the test launch file
 ```
 $ rostest beginner_tutorials test_beginner_tutorials.launch
 ```
+
+## rosbag
+
+Bags are created by rosbag, which subscribe to one or more ROS topics and store the serialized message data in a file as it is received. These files can then be played back in ROS to the same topics they were recorded from, or even remapped to new topics. <br/>
+ROS bag can be run on simulation environment as well as on real robots. ROS provides executables named record and play that are members of the rosbag package. These executables make it easy to include bags as a part of our launch file.
+
+```
+$ roslaunch beginner_tutorials SubPub.launch Record:=true freq:=1
+```
+>Note: 15 sec is the maximum duration of data recorded in bagfile. The generated bag file is stored in the results directory.
+
+Recorded bag file using rosbag record can be examine it and play it back using the commands rosbag play. Now, we can verify the listener node whether its printing messages by running the rosbag play to replay the topic message. 
+
+Follow the steps below:
+1. Start roscore
+   ```
+   $ cd ~/catkin_ws
+   $ roscore
+   ```
+2. Open a new shell and run ros listener node.
+ 
+   ```
+   $ source devel/setup.bash
+   $ rosrun beginner_tutorials listener
+   ```
+3. Open a new shell and play back the generated bag file
+   ```
+   $ source devel/setup.bash
+   $ rosbag play src/beginner_tutorials/results/record.bag
+   ```
+> Note: rosbag play reads the contents of bag files and plays them back in a time_synchronized manner.
+
