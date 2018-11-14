@@ -108,3 +108,37 @@ To run rqt_console, open new shell and type:
 $ rosrun rqt_console rqt_console
 ```
 You can also refer to the image file given in the *results* directory.
+
+## tf
+
+This tf program is using tf library to create only one coordinate frame transformation that is a world frame to talk frame. It uses a tf to broadcast tf frame called /talk with parent /world.
+
+### Running the program
+
+1. Open new shell and run the talker node
+```
+$ cd ~/catkin_ws
+$ source devel/setup.bash
+$ roslaunch beginner_tutorials SubPub.launch
+```
+2. To echo the transform between /world and /talk open new shell and run the below commands  
+```
+$ cd ~/catkin_ws
+$ source devel/setup.bash
+$ rosrun tf tf_echo /world /talk
+```
+3. tf also provides, a runtime tool for visualizing the tree of frame being broadcast over ROS using the command below. To run first open new terminal and then run the below commands.
+```
+$ cd ~/catkin_ws
+$ source devel/setup.bash
+$ rosrun rqt_tf_tree rqt_tf_tree
+```
+>Note: We can refresh the tree simply by the refresh bottom in the top-left corner of the diagram.
+
+4. Using view_frames to look what tf is doing behind the scenes
+```
+$ cd ~/catkin_ws
+$ source devel/setup.bash
+$ rosrun tf view_frames
+$ evince frames.pdf
+``` 

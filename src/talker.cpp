@@ -49,6 +49,13 @@
 #include "std_msgs/String.h"
 
 /**
+ * tf package provides an implementation of a TransformBroadcaster to help make
+ * the task easier. To use the TransformBroadcaster, we need to include the 
+ * header file
+ */
+#include "tf/transform_broadcaster.h"
+
+/**
  * Including C++ header file associated with the service which defines datatype
  * of request and response
  */
@@ -81,7 +88,14 @@ int main(int argc, char **argv) {
    */
   ros::NodeHandle n;
 
+  // Creating an object of message service class
   Message m;
+
+  // Create a TransformBroadcaster object that will be used to send the transformation.
+  static tf::TransformBroadcaster br;
+  
+  // Create a Transform object
+  tf::Transform transform;
 
   // initialize parameter variable
   auto frequency = 0;
@@ -171,6 +185,27 @@ int main(int argc, char **argv) {
      * constructor above.
      */
     chatter_pub.publish(msg);
+
+    // transform is time-variant
+    transform.setOrigin(tf::Vector3(0, 0, count));
+    tf::Quaternion q;
+    q.setRPY(0, 0, count);
+
+    // set the rotation generated using the count & quaternion above
+    transform.setRotation(q);
+    
+    /**
+     * Sending the transform - four parameters are used
+     * - transform itself
+     * - second we need to give the transform being published a timestamp,
+     *   we'll just stamp it with the current time, ros::Time::now()
+     * - Then, we need to pass the name of the parent frame of the link, in our
+     *   case it's "world"
+     * - Last, we need to pass the name of the child frame of the link, in our
+     *   case it's "talk"
+     */
+    br.sendTransform(tf::StampedTransform(transform, ros::Time::now(),
+     "world", "talk"));
 
     /** 
      * Calling ros::spinOnce() here is not necessary for this simple program,
