@@ -194,3 +194,7 @@ Follow the steps below:
    ```
 > Note: rosbag play reads the contents of bag files and plays them back in a time_synchronized manner.
 
+Inspecting the recorded bag files: The rosbag info command used below can provide a number of interesting snippets of information about a bag.
+```
+$ rosbag info src/beginner_tutorials/results/record.bag
+```

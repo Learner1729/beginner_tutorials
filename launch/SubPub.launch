@@ -1,6 +1,7 @@
 <launch>  
   
-  <arg name="freq" default="10"/> 
+  <arg name="freq" default="10"/>
+  <arg name="Record" default="false"/>
   
   <node
    name="talker"
