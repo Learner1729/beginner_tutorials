@@ -40,6 +40,7 @@ catkin_ws/
 ---include/
 ---src/
 ---srv/
+---test/
 ---etc...
 ```
 >Note: "-" indicates levels
@@ -142,3 +143,22 @@ $ source devel/setup.bash
 $ rosrun tf view_frames
 $ evince frames.pdf
 ``` 
+
+## Testing the talker node
+Created a test to check the base string change service of talker node. Follow the below steps to compile and launching the tests:
+```
+$ cd ~/catkin_ws
+$ catkin_make run_tests_beginner_tutorials
+```
+>Note: In the above command, firstly the test binary will get compiled and then the rostest file in the test folder will be launched by rostest.
+
+Below is the alternate way to compile and launch the test
+```
+$ cd ~/catkin_ws
+$ catkin_make tests -> Will build the test
+$ catkin_make test -> Will launch the test
+```
+Moreover, tests can also be launched using the test launch file
+```
+$ rostest beginner_tutorials test_beginner_tutorials.launch
+```
