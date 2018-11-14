@@ -1,6 +1,6 @@
-# ROS begineer tutorials
+# Week_11 ROS begineer tutorials
 
-*This repository is created in order to complete ROS begineer tutorials for ENPM808X: Software Development of Robotics ME Coursework.*
+*This week's tutorials deal with ROS tf, testing and bag files.*
 
 ## Licence
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
@@ -41,6 +41,7 @@ catkin_ws/
 ---src/
 ---srv/
 ---test/
+---results/
 ---etc...
 ```
 >Note: "-" indicates levels
@@ -51,6 +52,9 @@ catkin_ws/
 $ mkdir -p ~/catkin_ws/src
 $ cd ~/catkin_ws/src
 $ git clone --recursive https://github.com/Learner1729/beginner_tutorials.git
+$ cd beginner_tutorials
+$ git branch -a
+$ git checkout Week11_HW
 $ cd ~/catkin_ws
 $ catkin_make
 $ source devel/setup.bash
@@ -194,7 +198,7 @@ Follow the steps below:
    ```
 > Note: rosbag play reads the contents of bag files and plays them back in a time_synchronized manner.
 
-Inspecting the recorded bag files: The rosbag info command used below can provide a number of interesting snippets of information about a bag.
+*Inspecting the recorded bag files*: The rosbag info command used below can provide a number of interesting snippets of information about a bag like path where rosbag file is stored, version, duration of the record time, start and end time of the recording, size of the recorded rosbag file, messages stored on a record rosbag file, compression method if applied, along with the types and topics from where messages recorded.
 ```
 $ rosbag info src/beginner_tutorials/results/record.bag
 ```
