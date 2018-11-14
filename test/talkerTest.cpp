@@ -44,16 +44,11 @@
  * Testing the talker node service
  */
 TEST(TEST_TALKER, test_service) {
-  
   ros::NodeHandle nh;
-  
   ros::ServiceClient client =
     nh.serviceClient<beginner_tutorials::changeBaseString>("changeBaseString");
-  
   bool exists(client.waitForExistence(ros::Duration(2)));
-  
   EXPECT_TRUE(exists);
-  
   beginner_tutorials::changeBaseString srv;
   srv.request.inputData = "TEST";
   client.call(srv);

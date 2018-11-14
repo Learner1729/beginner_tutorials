@@ -91,9 +91,10 @@ int main(int argc, char **argv) {
   // Creating an object of message service class
   Message m;
 
-  // Create a TransformBroadcaster object that will be used to send the transformation.
+  // Create a TransformBroadcaster object that will be used to send the
+  // transformation.
   static tf::TransformBroadcaster br;
-  
+
   // Create a Transform object
   tf::Transform transform;
 
@@ -193,7 +194,7 @@ int main(int argc, char **argv) {
 
     // set the rotation generated using the count & quaternion above
     transform.setRotation(q);
-    
+
     /**
      * Sending the transform - four parameters are used
      * - transform itself
